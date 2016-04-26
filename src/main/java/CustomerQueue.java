@@ -24,6 +24,12 @@ public class CustomerQueue {
     /** The average arrival rate. */
     private double arrivalRate;
 
+    /** */
+    private int serviceTime;
+
+    public int getServiceTime(){
+        return serviceTime;
+    }
     // Constructor
     /** Construct a customerQueue with the given name.
      @param queueName The name of this queue
@@ -32,6 +38,7 @@ public class CustomerQueue {
         numServed = 0;
         totalWait = 0;
         this.queueName = queueName;
+//        serviceTime = tService;
         theQueue = new LinkedList < Customer > ();
     }
 
@@ -82,9 +89,19 @@ public class CustomerQueue {
      @param showAll Flag to indicate that detailed
      data should be output
      */
-    public void checkNewArrival(int clock, boolean showAll) {
+    public void checkNewArrival(int clock, boolean showAll, ArrayList<Customer> data) {
+        for(int next=0; next<data.size(); next++){
+            if ((data.get(next).getArrivalTime() == clock) && (data.get(next).inQueue == false)){
+                theQueue.add(new Customer(clock, data.get(next).getserviceTime()
+                        ,Integer.valueOf (queueName.charAt(queueName.length()))));
+                // set customer in queue
+                data.get(next).inQueue = true;
+            }
+
+        }
+        /*
         if (Math.random() < arrivalRate) {
-            theQueue.add(new Customer(clock));
+            theQueue.add(new Customer(clock, serviceTime ,Integer.valueOf (queueName.charAt(queueName.length()))));
             if (showAll) {
                 System.out.println("Time is "
                         + clock + ": "
@@ -93,6 +110,7 @@ public class CustomerQueue {
                         + theQueue.size());
             }
         }
+        */
     }
 
     /** Update statistics.
@@ -114,7 +132,7 @@ public class CustomerQueue {
                     + " with time stamp "
                     + timeStamp);
         }
-        return clock + nextcustomer.getProcessingTime();
+        return clock + nextcustomer.getserviceTime();
     }
 
 }

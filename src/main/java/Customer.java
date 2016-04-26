@@ -14,23 +14,34 @@ public class Customer {
     private int customerId;
 
     /** The time needed to process this customer. */
-    private int processingTime;
+    private int serviceTime;
 
     /** The time this customer arrives. */
     private int arrivalTime;
 
+    /** The type of customer **/
+    private int customerType;
+
     /** The maximum time to process a customer. */
-    private static int maxProcessingTime;
+    private static int maxserviceTime;
 
     /** The sequence number for customers. */
     private static int idNum = 0;
 
-    /** Create a new customer.
-     @param arrivalTime The time this customer arrives */
-    public Customer(int arrivalTime) {
+    public boolean inQueue;
+    /**
+     * Create a new customer.
+     * @param arrivalTime The time this customer arrives
+     * @param tService The time serve to this customer
+     * @param type customer priority type
+     */
+    public Customer(int arrivalTime, int tService ,int type) {
         this.arrivalTime = arrivalTime;
-        processingTime = 1 + (new Random()).nextInt(maxProcessingTime);
+//        serviceTime = 1 + (new Random()).nextInt(maxserviceTime);
+        serviceTime = tService;
         customerId = idNum++;
+        customerType = type;
+        inQueue = false;
     }
 
     /** Get the arrival time.
@@ -41,8 +52,8 @@ public class Customer {
 
     /** Get the processing time.
      @return The processing time */
-    public int getProcessingTime() {
-        return processingTime;
+    public int getserviceTime() {
+        return serviceTime;
     }
 
     /** Get the customer ID.
@@ -51,10 +62,18 @@ public class Customer {
         return customerId;
     }
 
+    /**
+     * Get the customer Type
+     * @return The customer type
+     */
+    public int getCustomerType(){
+        return customerType;
+    }
+
     /** Set the maximum processing time
      @param maxProcessTime The new value */
-    public static void setMaxProcessingTime(int maxProcessTime) {
-        maxProcessingTime = maxProcessTime;
+    public static void setMaxserviceTime(int maxProcessTime) {
+        maxserviceTime = maxProcessTime;
     }
 }
 
