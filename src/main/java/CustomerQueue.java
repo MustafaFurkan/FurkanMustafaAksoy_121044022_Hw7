@@ -4,7 +4,7 @@
 import java.util.*;
 
 /** Class to simulate a queue of customers.
- *  @author Koffman & Wolfgang
+ *  @author Furkan Mustafa Aksoy
  * */
 
 public class CustomerQueue {
@@ -24,9 +24,13 @@ public class CustomerQueue {
     /** The average arrival rate. */
     private double arrivalRate;
 
-    /** */
+    /** Service time */
     private int serviceTime;
 
+    /**
+     * Get Service time
+      * @return Service time
+     */
     public int getServiceTime(){
         return serviceTime;
     }
@@ -84,33 +88,19 @@ public class CustomerQueue {
         return theQueue.size();
     }
 
-    /** Check if a new arrival has occurred.
-     @param clock The current simulated time
-     @param showAll Flag to indicate that detailed
-     data should be output
+    /**
+     *  Check if a new arrival has occurred.
+     * @param clock The current simulated time
+     * @param showAll Flag to indicate that detailed
+     * @param data Current customer
+     * @param type Type of customer for priority
      */
-    public void checkNewArrival(int clock, boolean showAll, ArrayList<Customer> data) {
-        for(int next=0; next<data.size(); next++){
-            if ((data.get(next).getArrivalTime() <= clock) && (data.get(next).inQueue == false)){
-                theQueue.add(new Customer(clock, data.get(next).getserviceTime()
-                        ,Integer.valueOf (queueName.charAt(queueName.length()-1))));
-                // set customer in queue
-                data.get(next).inQueue = true;
-            }
-
+    public void checkNewArrival(int clock, boolean showAll, Customer data,int type) {
+        if ((data.getArrivalTime() <= clock) && (data.inQueue == false)){
+            theQueue.add(new Customer(clock, data.getserviceTime(),type));
+            // set customer in queue
+            data.inQueue = true;
         }
-        /*
-        if (Math.random() < arrivalRate) {
-            theQueue.add(new Customer(clock, serviceTime ,Integer.valueOf (queueName.charAt(queueName.length()))));
-            if (showAll) {
-                System.out.println("Time is "
-                        + clock + ": "
-                        + queueName
-                        + " arrival, new queue size is "
-                        + theQueue.size());
-            }
-        }
-        */
     }
 
     /** Update statistics.
@@ -137,4 +127,18 @@ public class CustomerQueue {
         return clock + nextcustomer.getserviceTime();
     }
 
+    /**
+     * To string method show data
+     * @return Information about current data
+     */
+    public String toString(){
+        StringBuilder show = new StringBuilder();
+
+        show.append("Queue:\n");
+
+        for (Customer customer : theQueue)
+            show.append(customer + " ");
+        show.append("\n");
+        return(show.toString());
+    }
 }

@@ -1,10 +1,8 @@
 /**
  * Created by Furkan on 24.04.2016.
  */
-import java.util.*;
-
 /** A class to represent a customer.
- *  @author Koffman & Wolfgang
+ *  @author Furkan Mustafa Aksoy
  * */
 
 public class Customer {
@@ -37,7 +35,6 @@ public class Customer {
      */
     public Customer(int arrivalTime, int tService ,int type) {
         this.arrivalTime = arrivalTime;
-//        serviceTime = 1 + (new Random()).nextInt(maxserviceTime);
         serviceTime = tService;
         customerId = idNum++;
         customerType = type;
@@ -75,5 +72,20 @@ public class Customer {
     public static void setMaxserviceTime(int maxProcessTime) {
         maxserviceTime = maxProcessTime;
     }
-}
 
+    /**
+     * To string method show data
+     * @return Information about current data
+     */
+    public String toString(){
+        StringBuilder show = new StringBuilder();
+
+        show.append("Customer " + getCustomerType());
+        show.append("\nCustomer SSN = ");
+        show.append(getId());
+        show.append("\nArrival Time = ");
+        show.append(getArrivalTime()/60 + ":" + getArrivalTime()%60);
+        show.append("");
+        return(show.toString());
+    }
+}
