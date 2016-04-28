@@ -91,9 +91,9 @@ public class CustomerQueue {
      */
     public void checkNewArrival(int clock, boolean showAll, ArrayList<Customer> data) {
         for(int next=0; next<data.size(); next++){
-            if ((data.get(next).getArrivalTime() == clock) && (data.get(next).inQueue == false)){
+            if ((data.get(next).getArrivalTime() <= clock) && (data.get(next).inQueue == false)){
                 theQueue.add(new Customer(clock, data.get(next).getserviceTime()
-                        ,Integer.valueOf (queueName.charAt(queueName.length()))));
+                        ,Integer.valueOf (queueName.charAt(queueName.length()-1))));
                 // set customer in queue
                 data.get(next).inQueue = true;
             }
@@ -126,11 +126,13 @@ public class CustomerQueue {
         totalWait += wait;
         numServed++;
         if (showAll) {
-            System.out.println("Time is " + clock
+            System.out.println("Time is " + clock/60 + ":" + clock%60
                     + ": Serving "
                     + queueName
+                    // Show Social Security Number each customer
+                    //+ "( SSN = " + nextcustomer.getId() + " )"
                     + " with time stamp "
-                    + timeStamp);
+                    + timeStamp/60 + ":" + timeStamp%60);
         }
         return clock + nextcustomer.getserviceTime();
     }

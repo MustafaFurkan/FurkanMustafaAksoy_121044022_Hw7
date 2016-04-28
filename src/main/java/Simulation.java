@@ -41,22 +41,22 @@ public class Simulation {
     private int maxProcessingTime;
 
     /** Total simulated time. */
-    private static int totalTime = 1440; // 1 day , 24 hour to minute
+    private static int totalTime = 1440; // 1 day , 24 hour to minute *60
 
     /** If set true, print additional output. */
-    private boolean showAll;
+    private boolean showAll=true;
 
     /** Simulated clock. */
     private int clock = 0;
 
     /** Time that the agent will be done with the current Customer.*/
-    private int timeDone;
+    private int timeDone = 0; // initialize
 
     /** Number of frequent flyers served since the
      last regular Customer was served. */
     private int frequentFlyersSinceRP;
 
-    private void runSimulation() {
+    public void runSimulation() {
         for (clock = 0; clock < totalTime; clock++) {
             customer1Queue.checkNewArrival(clock, showAll,allData);
             customer2Queue.checkNewArrival(clock, showAll,allData);
@@ -82,8 +82,8 @@ public class Simulation {
             // Serve the next less priority Customer.
             timeDone = customer3Queue.update(clock, showAll);
         }
-        else if (showAll) {
-            System.out.println("Time is " + clock
+        else if (clock/60 < 10) {
+            System.out.println("Time is " + clock/60 + ":" + clock%60
                     + " server is idle");
         }
     }
@@ -168,14 +168,14 @@ private void startServe() {
             arrivalTime = hour * 60 + min;
 
             allData.add(new Customer(arrivalTime, serviceTime ,customerType));
-System.out.println(" ----> " + hour + min + " ----> " + serviceTime + " ----> " + customerType);
+//System.out.println(" ----> " + hour + min + " ----> " + serviceTime + " ----> " + customerType);
 
         }
-        System.out.println("data size" + allData.size());
+//        System.out.println("data size" + allData.size());
 
         fileReader.close();
-        System.out.println("Contents of file:");
-        System.out.println(stringBuffer.toString());
+//        System.out.println("Contents of file:");
+//        System.out.println(stringBuffer.toString());
 
     }
 
